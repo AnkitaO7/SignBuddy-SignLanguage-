@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SignBuddy - Sign Language Assistant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <header class="gradient-bg">
+    <h1><i class="fa-solid fa-hands-asl-interpreting"></i> SignBuddy</h1>
+  </header>
+
+  <div class="container">
+    <div class="mode-buttons">
+      <button class="toggle-btn" onclick="toggleDarkMode()">
+        <i class="fa-solid fa-moon"></i> Theme
+      </button>
+      <button class="mode-btn phrase-mode" onclick="switchMode('general')">
+        <i class="fa-solid fa-comment-dots"></i> Phrase Mode
+      </button>
+      <button class="mode-btn digit-mode" onclick="switchMode('number')">
+        <i class="fa-solid fa-hand-point-up"></i> Digit Mode
+      </button>
+    </div>
+
+    <div id="general" class="sub-section">
+      <div class="camera-header">
+        <h2><i class="fa-solid fa-camera"></i> Phrase Detection</h2>
+        <button class="camera-toggle" onclick="toggleCamera()">
+          <i class="fa-solid fa-power-off"></i> Start Camera
+        </button>
+      </div>
+      <div class="camera-feed">
+        <img id="mjpegStreamGeneral" class="camera-frame" src="/video/general" />
+        <div class="detection-overlay"></div>
+      </div>
+      <div class="output-box">
+        <p id="phraseOutput">Detected phrase will appear here...</p>
+        <audio id="phraseAudio"></audio>
+      </div>
+    </div>
+
+    <div id="number" class="sub-section">
+      <div class="camera-header">
+        <h2><i class="fa-solid fa-camera"></i> Digit Detection</h2>
+        <button class="camera-toggle" onclick="toggleCamera()">
+          <i class="fa-solid fa-power-off"></i> Start Camera
+        </button>
+      </div>
+      <div class="camera-feed">
+        <img id="mjpegStreamNumber" class="camera-frame" src="/video/number" />
+        <div class="detection-overlay"></div>
+      </div>
+      <div class="output-box">
+        <p id="digitOutput">Detected digit will appear here...</p>
+        <audio id="digitAudio"></audio>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let isCameraOn = false;
+    let dark = false;
+    let currentVideoElement = null;
+
+    function showSection(mode) {
+      document.querySelectorAll(".sub-section").forEach(sec => sec.classList.remove("visible"));
+      document.getElementById(mode).classList.add("visible");
+      document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.${mode}-mode`).classList.add('active');
+    }
+
+    function toggleDarkMode() {
+      dark = !dark;
+      document.body.classList.toggle("dark-mode");
+      document.querySelector('.toggle-btn i').classList.toggle('fa-moon');
+      document.querySelector('.toggle-btn i').classList.toggle('fa-sun');
+    }
+
+    async function toggleCamera() {
+      isCameraOn = !isCameraOn;
+      document.querySelectorAll('.camera-toggle').forEach(btn => {
+        btn.innerHTML = `<i class="fa-solid fa-power-off"></i> ${isCameraOn ? 'Stop' : 'Start'} Camera`;
+        btn.classList.toggle('active', isCameraOn);
+      });
+      await fetch('/toggle_camera', { method: 'POST' });
+    }
+
+    function switchMode(mode) {
+      if (currentVideoElement) {
+        currentVideoElement.src = '';
+      }
+      fetch(`/set_mode/${mode}`, { method: 'POST' })
+        .then(res => {
+          if (!res.ok) throw new Error('Mode switch failed');
+          const id = `mjpegStream${mode.charAt(0).toUpperCase() + mode.slice(1)}`;
+          const newVid = document.getElementById(id);
+          newVid.src = `/video/${mode}?${Date.now()}`;
+          currentVideoElement = newVid;
+          showSection(mode);
+        })
+        .catch(console.error);
+    }
+
+    // Release camera on page unload
+    window.addEventListener('beforeunload', () => {
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      showSection('general');
+      currentVideoElement = document.getElementById('mjpegStreamGeneral');
+    });
+  </script>
+</body>
+</html>

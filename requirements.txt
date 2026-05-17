@@ -1,0 +1,10 @@
+flask
+cvzone==1.6.1
+numpy==1.24.3
+opencv-python==4.11.0.86
+opencv-contrib-python==4.11.0.86
+mediapipe==0.10.11
+pyttsx3==2.98
+tensorflow==2.13.0
+keras==2.13.1
+matplotlib==3.7.5

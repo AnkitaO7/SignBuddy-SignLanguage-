@@ -1,0 +1,199 @@
+
+*{
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+:root {
+--primary: #2A2A72;
+--secondary: #FFA400;
+--accent: #00C896;
+--background: #F8F9FA;
+--text: #2D2D2D;
+}
+
+body {
+font-family: 'Poppins', sans-serif;
+background-color: var(--background);
+color: var(--text);
+transition: all 0.3s ease;
+}
+
+.gradient-bg {
+background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+}
+
+header {
+padding: 2rem 1rem;
+text-align: center;
+box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+header h1 {
+color: white;
+font-size: 2.5rem;
+text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.container {
+max-width: 1200px;
+margin: 2rem auto;
+padding: 0 1rem;
+}
+
+.mode-buttons {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 1rem;
+margin-bottom: 2rem;
+}
+
+.mode-btn {
+padding: 1.5rem;
+font-size: 1.1rem;
+border: none;
+border-radius: 15px;
+cursor: pointer;
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 0.5rem;
+background: white;
+box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.mode-btn i {
+font-size: 1.5rem;
+}
+
+.mode-btn.active {
+transform: translateY(-5px);
+box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.phrase-mode { color: var(--primary); border: 3px solid var(--primary); }
+.digit-mode { color: var(--accent); border: 3px solid var(--accent); }
+.phrase-mode.active { background: var(--primary); color: white; }
+.digit-mode.active { background: var(--accent); color: white; }
+
+.toggle-btn {
+padding: 1.5rem;
+font-size: 1.1rem;
+border: none;
+border-radius: 15px;
+cursor: pointer;
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 0.5rem;
+background: var(--text);
+color: white;
+}
+
+/* Fix: Toggle button text color in dark mode */
+.dark-mode .toggle-btn {
+background: white;
+color: black;
+}
+
+.sub-section {
+display: none;
+background: white;
+border-radius: 20px;
+padding: 2rem;
+box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+}
+
+.sub-section.visible {
+display: block;
+animation: fadeIn 0.5s ease;
+}
+
+.camera-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 1.5rem;
+}
+
+.camera-toggle {
+background: var(--secondary);
+color: white;
+padding: 0.8rem 1.5rem;
+border-radius: 10px;
+border: none;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.camera-toggle.active {
+background: #ff5100;
+}
+
+.camera-feed {
+position: relative;
+border-radius: 15px;
+overflow: hidden;
+background: #000;
+}
+
+.camera-frame {
+width: 100%;
+height: 500px;
+object-fit: cover;
+display: block;
+transition: opacity 0.3s ease;
+}
+
+.output-box {
+margin-top: 1.5rem;
+padding: 1rem;
+background: var(--background);
+border-radius: 10px;
+text-align: center;
+font-size: 1.2rem;
+font-weight: 600;
+}
+
+.pulse {
+animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+0% { transform: scale(1); }
+50% { transform: scale(1.05); }
+100% { transform: scale(1); }
+}
+
+.dark-mode {
+--background: #1A1A1A;
+--text: #FFFFFF;
+--primary: #4A47A3;
+--secondary: #FF6B6B;
+}
+
+.dark-mode .sub-section {
+background: #2D2D2D;
+}
+
+.dark-mode .mode-btn {
+background: #2D2D2D;
+}
+
+@media (max-width: 768px) {
+.mode-buttons {
+grid-template-columns: 1fr;
+}
+
+.camera-header {
+flex-direction: column;
+gap: 1rem;
+}
+
+.camera-frame {
+height: 300px;
+}
+}
