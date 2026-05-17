@@ -1,4 +1,4 @@
-# SignBuddy - Sign Language Assistant
+# SignBuddy - Sign Language Detection
 
 SignBuddy is a real-time sign language recognition web application built using Flask, OpenCV, and Deep Learning.
 
