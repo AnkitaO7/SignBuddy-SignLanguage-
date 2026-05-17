@@ -1,4 +1,4 @@
-flask
+Flask==3.0.3
 cvzone==1.6.1
 numpy==1.24.3
 opencv-python==4.11.0.86
@@ -8,3 +8,5 @@ pyttsx3==2.98
 tensorflow==2.13.0
 keras==2.13.1
 matplotlib==3.7.5
+protobuf==3.20.3
+Pillow==10.4.0
