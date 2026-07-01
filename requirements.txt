@@ -33,3 +33,17 @@ scipy==1.10.1
 sounddevice==0.5.1
 cffi==1.17.1
 pycparser==2.22
+typing_extensions==4.12.2
+gast==0.4.0
+google-pasta==0.2.0
+grpcio==1.65.5
+h5py==3.11.0
+libclang==18.1.1
+opt-einsum==3.3.0
+termcolor==2.4.0
+wrapt==1.17.2
+astunparse==1.6.3
+ml-dtypes==0.2.0
+tensorboard==2.13.0
+tensorflow-estimator==2.13.0
+tensorflow-io-gcs-filesystem==0.37.1
