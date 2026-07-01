@@ -7,6 +7,7 @@ import math
 import pyttsx3
 import time
 import threading
+import os
 
 app = Flask(__name__)
 
@@ -21,14 +22,14 @@ imgSize     = 224
 
 # Load your two classifiers and label lists:
 general_classifier = Classifier(
-    r"Model\General\keras_model_retrained.h5",
-    r"Model\General\labels_retrained.txt"
+    r"Model/General/keras_model_retrained.h5",
+    r"Model/General/labels_retrained.txt"
 )
 general_labels = ["Good", "Hello", "No", "Ok", "Thank You", "Yes"]
 
 number_classifier = Classifier(
-    r"Model\Number\keras_model.h5",
-    r"Model\Number\labels.txt"
+    r"Model/Number/keras_model.h5",
+    r"Model/Number/labels.txt"
 )
 number_labels = ["Eight", "Five", "Four", "Nine", "One", "Seven", "Six", "Three", "Two", "Zero"]
 
@@ -144,8 +145,10 @@ def generate_frames(mode="general"):
 
 # -- Start server ------------------------------------------------------------
 if __name__ == "__main__":
-    host = "127.0.0.1"
-    port = 5000
-    print("\n  Flask starting up! Visit this URL in your browser:\n")
-    print(f"    http://{host}:{port}/\n")
-    app.run(host=host, port=port, debug=True)
+    # host = "127.0.0.1"
+    # port = 5000
+    # print("\n  Flask starting up! Visit this URL in your browser:\n")
+    # print(f"    http://{host}:{port}/\n")
+    # app.run(host=host, port=port, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
